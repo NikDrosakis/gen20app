@@ -1,0 +1,39 @@
+name: React Native CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (using Node.js 20)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: yarn install
+
+      # Step 4: Run tests (if any)
+      - name: Run Tests
+        run: yarn test
+
+      # Step 5: Build Android (example)
+      - name: Build Android
+        run: |
+          cd android
+          ./gradlew assembleDebug
